@@ -6,6 +6,8 @@ public class Map : MonoBehaviour
 {
     [SerializeField] private int sizeX = 10, sizeY = 10;
     [SerializeField] private GameObject defaultCell, moverRight, moverLeft;
+    [SerializeField] private GameObject player;
+    [SerializeField] private int playerPosX = 10, playerPosY = 10;
     void Start()
     {
         for (int y = -sizeY / 2; y <= sizeY / 2; y++)
@@ -20,6 +22,7 @@ public class Map : MonoBehaviour
                 }
             }
         }
+        Instantiate(player, new Vector3(playerPosX, playerPosY, 0), new Quaternion(0, 0, 0, 0));
     }
 
     // Update is called once per frame
