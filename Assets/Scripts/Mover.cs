@@ -5,15 +5,14 @@ using UnityEngine;
 public class Mover : MonoBehaviour
 {
     public bool isRightMover;
-    public bool isPlayerInside;
-    public void onMoverCreated(bool isRightMover, bool isPlayerInside)
+    public void onMoverCreated(bool isRightMover)
     {
         this.isRightMover = isRightMover;
-        this.isPlayerInside = isPlayerInside;
     }
-    public void onPlayerEnter(Vector3 playerPos)
+    public void movePlayer(GameObject player)
     {
-        if (isRightMover) playerPos += new Vector3(1, 0, 0);
-        else playerPos += new Vector3(-1, 0, 0);
+        Debug.Log("movePlayer");
+        if (isRightMover) player.transform.position += new Vector3(1, 0, 0);
+        else player.transform.position += new Vector3(-1, 0, 0);
     }
 }
