@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Map : MonoBehaviour
 {
     [SerializeField] private int sizeX = 16, sizeY = 8;
     [SerializeField] private int mapShiftX = 8, mapShiftY = 4;
-    [SerializeField] private GameObject defaultCell, moverRight, moverLeft, portal;
+    [SerializeField] private GameObject defaultCell, moverRight, moverLeft, portal, door;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject[,] cells;
     [SerializeField] private int playerStartPosX = 3, playerStartPosY = 3;
+    [SerializeField] private MenuManager menu;
+    public UnityEvent GameOver = new UnityEvent();
     void Start()
     {
         cells = new GameObject[sizeY, sizeX];
@@ -20,7 +23,8 @@ public class Map : MonoBehaviour
             {
                 switch(Random.Range(0, 4))
                 {
-                    case 0: cells[y, x] = Instantiate(defaultCell, new Vector3(x - mapShiftX, y - mapShiftY, 0), new Quaternion(0, 0, 0, 0)); break;
+                    case 0: 
+                        cells[y, x] = Instantiate(defaultCell, new Vector3(x - mapShiftX, y - mapShiftY, 0), new Quaternion(0, 0, 0, 0)); break;
                     case 1: 
                         cells[y, x] = Instantiate(moverRight, new Vector3(x - mapShiftX, y - mapShiftY, 0), new Quaternion(0, 0, 0, 0));
                         cells[y, x].GetComponent<Mover>().onMoverCreated(true);
@@ -43,6 +47,20 @@ public class Map : MonoBehaviour
         player = Instantiate(player, new Vector3(playerStartPosX, playerStartPosY, 0), new Quaternion(0, 0, 0, 0));
         player.GetComponent<Player>().onPlayerCreated(this);
 
+        
+        for(int i = 0; i < portals.Count; i++)
+        {
+            int posX = (int)portals[i].gameObject.transform.position.x + mapShiftX;
+            int posY = (int)portals[i].gameObject.transform.position.y + mapShiftY;
+            if (posY < sizeY - 1) if(!cells[posY + 1, posX].GetComponent<Portal>())
+            {
+                Destroy(cells[posY + 1, posX]);
+                cells[posY + 1, posX] = Instantiate(door, new Vector3(posX - mapShiftX, posY + 1 - mapShiftY, 0), new Quaternion(0, 0, 0, 0));
+                break;
+            }
+        }
+        
+
         // Перемешиваем порталы
         for (int i = 0; i <= portals.Count; i++)
         {
@@ -57,7 +75,6 @@ public class Map : MonoBehaviour
             portals.RemoveAt(i);
         }
 
-        Debug.Log(portals.Count);
 
         // Связываем порталы попарно
         for (int i = 0; i < portals.Count && i<18; i+=2)
@@ -80,7 +97,10 @@ public class Map : MonoBehaviour
             portals[i + 1].onPortalCreated(portals[i], color);
         }
 
-            InvokeRepeating("callMover", 0, 1);
+        GameOver.AddListener(player.GetComponent<Player>().onGameOver);
+        GameOver.AddListener(menu.onGameOver);
+
+        InvokeRepeating("callMover", 0, 1);
     }
 
     private void callMover()
@@ -90,5 +110,12 @@ public class Map : MonoBehaviour
 
         Portal portal = cells[(int)player.transform.position.y + mapShiftY, (int)player.transform.position.x + mapShiftX].GetComponent<Portal>();
         if (portal) portal.teleportPlayer(player);
+
+        Door door = cells[(int)player.transform.position.y + mapShiftY, (int)player.transform.position.x + mapShiftX].GetComponent<Door>();
+        if (door)
+        {
+            CancelInvoke("callMover");
+            GameOver.Invoke();
+        }
     }
 }

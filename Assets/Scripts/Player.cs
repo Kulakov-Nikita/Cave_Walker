@@ -6,9 +6,14 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour
 {
     Map map;
+    private bool isMovePossible = true;
     public void onPlayerCreated(Map map)
     {
         this.map = map;
+    }
+    public void onGameOver()
+    {
+        isMovePossible = false;
     }
     void Update()
     {
@@ -22,7 +27,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow)) moveDir = new Vector3(0, 1, 0);
         if (Input.GetKeyDown(KeyCode.DownArrow)) moveDir = new Vector3(0, -1, 0);
 
-        if (moveDir != new Vector3(0, 0, 0))
+        if (isMovePossible && moveDir != new Vector3(0, 0, 0))
         {
             transform.position += moveDir;
         }
