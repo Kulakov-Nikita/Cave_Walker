@@ -45,7 +45,7 @@ public class Map : MonoBehaviour
             }
         }
         player = Instantiate(player, new Vector3(playerStartPosX, playerStartPosY, 0), new Quaternion(0, 0, 0, 0));
-        player.GetComponent<Player>().onPlayerCreated(this);
+        player.GetComponent<Player>().onPlayerCreated(this, menu);
 
         
         for(int i = 0; i < portals.Count; i++)

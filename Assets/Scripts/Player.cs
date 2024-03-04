@@ -6,10 +6,12 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour
 {
     Map map;
+    MenuManager menuManager;
     private bool isMovePossible = true;
-    public void onPlayerCreated(Map map)
+    public void onPlayerCreated(Map map, MenuManager menuManager)
     {
         this.map = map;
+        this.menuManager = menuManager;
     }
     public void onGameOver()
     {
@@ -30,6 +32,7 @@ public class Player : MonoBehaviour
         if (isMovePossible && moveDir != new Vector3(0, 0, 0))
         {
             transform.position += moveDir;
+            menuManager.onPlayerStep();
         }
     }
 
