@@ -230,12 +230,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sizeX: 16
   sizeY: 8
+  mapShiftX: 8
+  mapShiftY: 4
   defaultCell: {fileID: 4919554311265109485, guid: 7f339b99c3271d64fa0286dba3007f02, type: 3}
   moverRight: {fileID: 2633444693441119061, guid: 2b8ca34873da66a4baa7b8710e490206, type: 3}
   moverLeft: {fileID: 5450878673201849146, guid: af04915ab021ba941822233ea332d085, type: 3}
+  portal: {fileID: 5507406527347322953, guid: e28fb357967788648a72c238a8e9385c, type: 3}
   player: {fileID: 3340782588071756135, guid: 8300cc11dc47f1d478ccbff48a45eb6a, type: 3}
-  playerPosX: 3
-  playerPosY: 3
+  playerStartPosX: 3
+  playerStartPosY: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
