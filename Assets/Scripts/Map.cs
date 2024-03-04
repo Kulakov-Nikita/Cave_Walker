@@ -30,8 +30,12 @@ public class Map : MonoBehaviour
                         cells[y, x].GetComponent<Mover>().onMoverCreated(false);
                         break;
                     case 3:
-                        cells[y, x] = Instantiate(portal, new Vector3(x - mapShiftX, y - mapShiftY, 0), new Quaternion(0, 0, 0, 0));
-                        portals.Add(cells[y, x].GetComponent<Portal>());
+                        if (portals.Count <= 18)
+                        {
+                            cells[y, x] = Instantiate(portal, new Vector3(x - mapShiftX, y - mapShiftY, 0), new Quaternion(0, 0, 0, 0));
+                            portals.Add(cells[y, x].GetComponent<Portal>());
+                        }
+                        else cells[y, x] = Instantiate(defaultCell, new Vector3(x - mapShiftX, y - mapShiftY, 0), new Quaternion(0, 0, 0, 0));
                         break;
                 }
             }
@@ -40,24 +44,40 @@ public class Map : MonoBehaviour
         player.GetComponent<Player>().onPlayerCreated(this);
 
         // Перемешиваем порталы
-        for (int i = 0; i < portals.Count; i++)
+        for (int i = 0; i <= portals.Count; i++)
         {
             Portal tmp = portals[0];
             portals.RemoveAt(0);
             portals.Insert(Random.Range(0, portals.Count), tmp);
         }
 
-        // Удаляем нечётный портал
-        if(portals.Count % 2 == 1)portals.RemoveAt(portals.Count-1);
+        // Оставляем только 18 порталов
+        for(int i=18; i< portals.Count; i++)
+        {
+            portals.RemoveAt(i);
+        }
 
         Debug.Log(portals.Count);
 
         // Связываем порталы попарно
-        for (int i = 0; i < portals.Count; i+=2)
+        for (int i = 0; i < portals.Count && i<18; i+=2)
         {
-            Debug.Log(i);
-            portals[i].onPortalCreated(portals[i + 1]);
-            portals[i + 1].onPortalCreated(portals[i]);
+            Color color;
+            switch(i/2)
+            {
+                case 0: color = Color.blue; break;
+                case 1: color = Color.cyan; break;
+                case 2: color = Color.gray; break;
+                case 3: color = Color.green; break;
+                case 4: color = Color.grey; break;
+                case 5: color = Color.magenta; break;
+                case 6: color = Color.red; break;
+                case 7: color = Color.white; break;
+                case 8: color = Color.yellow; break;
+                default: color = Color.white; break;
+            }
+            portals[i].onPortalCreated(portals[i + 1], color);
+            portals[i + 1].onPortalCreated(portals[i], color);
         }
 
             InvokeRepeating("callMover", 0, 1);
