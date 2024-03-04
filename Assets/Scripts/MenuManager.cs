@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject GameOver;
-    [SerializeField] private Text t_score, t_time, t_steps;
-    private int score = 0, time = 0, steps = 0;
+    [SerializeField] private Text t_stars, t_time, t_steps, t_score;
+    private int stars = 100, time = 0, steps = 0;
     void Start()
     {
         GameOver.SetActive(false);
@@ -15,7 +15,7 @@ public class MenuManager : MonoBehaviour
     }
     private void ScoreUpdate()
     {
-        t_score.text = "Score: " + score.ToString();
+        t_stars.text = "Stars: " + stars.ToString();
         t_time.text = "Time: " + time.ToString();
         t_steps.text = "Steps: " + steps.ToString();
         time++;
@@ -27,6 +27,7 @@ public class MenuManager : MonoBehaviour
 
     public void onGameOver() 
     {
+        t_score.text = "Your score: " + Mathf.Max(stars - time / 10 - steps / 3, 0).ToString();
         GameOver.SetActive(true);
         CancelInvoke("ScoreUpdate");
     }
