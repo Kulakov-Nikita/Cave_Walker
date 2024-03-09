@@ -1,7 +1,8 @@
 Laboratory work on computer graphics
 
 Control:
-Arrow up, Arrow down
+* Arrow up
+* Arrow down
 
 Interactive objects:
 * Cells that move the player horizontally (Fires once per second)
@@ -10,5 +11,5 @@ Interactive objects:
 * Door
 
 Goal:
-Get to the exit in as little time and number of steps as possible,
+* Get to the exit in as little time and number of steps as possible,
 collecting as many stars as possible.
