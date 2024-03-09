@@ -155,9 +155,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 660625900}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -400, y: 300}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -50}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &220966809
@@ -569,6 +569,7 @@ MonoBehaviour:
   moverLeft: {fileID: 5450878673201849146, guid: af04915ab021ba941822233ea332d085, type: 3}
   portal: {fileID: 5507406527347322953, guid: e28fb357967788648a72c238a8e9385c, type: 3}
   door: {fileID: 5338939172143033905, guid: a89ec5f3adbeabe43a887eb496a1d776, type: 3}
+  starCell: {fileID: 3849809485199764277, guid: 578094c4c5829e64ab90412b337ced77, type: 3}
   player: {fileID: 3340782588071756135, guid: 8300cc11dc47f1d478ccbff48a45eb6a, type: 3}
   playerStartPosX: 3
   playerStartPosY: 3
@@ -625,9 +626,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 660625900}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 400, y: 300}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -100, y: -50}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1178197921
@@ -704,9 +705,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 660625900}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 300}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 40, y: -50}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1194927340

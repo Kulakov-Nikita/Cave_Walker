@@ -7,7 +7,7 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject GameOver;
     [SerializeField] private Text t_stars, t_time, t_steps, t_score;
-    private int stars = 100, time = 0, steps = 0;
+    private int stars = 0, time = 0, steps = 0;
     void Start()
     {
         GameOver.SetActive(false);
@@ -24,10 +24,14 @@ public class MenuManager : MonoBehaviour
     {
         steps++;
     }
+    public void onStarCollected()
+    {
+        stars++;
+    }
 
     public void onGameOver() 
     {
-        t_score.text = "Your score: " + Mathf.Max(stars - time / 10 - steps / 3, 0).ToString();
+        t_score.text = "Your score: " + Mathf.Max(stars * 100 - time - steps * 3, 0).ToString();
         GameOver.SetActive(true);
         CancelInvoke("ScoreUpdate");
     }

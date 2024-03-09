@@ -7,7 +7,7 @@ public class Map : MonoBehaviour
 {
     [SerializeField] private int sizeX = 16, sizeY = 8;
     [SerializeField] private int mapShiftX = 8, mapShiftY = 4;
-    [SerializeField] private GameObject defaultCell, moverRight, moverLeft, portal, door;
+    [SerializeField] private GameObject defaultCell, moverRight, moverLeft, portal, door, starCell;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject[,] cells;
     [SerializeField] private int playerStartPosX = 3, playerStartPosY = 3;
@@ -39,7 +39,7 @@ public class Map : MonoBehaviour
                             cells[y, x] = Instantiate(portal, new Vector3(x - mapShiftX, y - mapShiftY, 0), new Quaternion(0, 0, 0, 0));
                             portals.Add(cells[y, x].GetComponent<Portal>());
                         }
-                        else cells[y, x] = Instantiate(defaultCell, new Vector3(x - mapShiftX, y - mapShiftY, 0), new Quaternion(0, 0, 0, 0));
+                        else cells[y, x] = Instantiate(starCell, new Vector3(x - mapShiftX, y - mapShiftY, 0), new Quaternion(0, 0, 0, 0));
                         break;
                 }
             }
@@ -102,6 +102,16 @@ public class Map : MonoBehaviour
 
         InvokeRepeating("callMover", 0, 1);
     }
+    private void Update()
+    {
+        Star star = cells[(int)player.transform.position.y + mapShiftY, (int)player.transform.position.x + mapShiftX].GetComponent<Star>();
+        if (star)
+        {
+            menu.onStarCollected();
+            Destroy(cells[(int)player.transform.position.y + mapShiftY, (int)player.transform.position.x + mapShiftX]);
+            cells[(int)player.transform.position.y + mapShiftY, (int)player.transform.position.x + mapShiftX] = Instantiate(defaultCell, new Vector3(player.transform.position.x, player.transform.position.y, 0), new Quaternion(0, 0, 0, 0));
+        }
+    }
 
     private void callMover()
     {
@@ -110,6 +120,7 @@ public class Map : MonoBehaviour
 
         Portal portal = cells[(int)player.transform.position.y + mapShiftY, (int)player.transform.position.x + mapShiftX].GetComponent<Portal>();
         if (portal) portal.teleportPlayer(player);
+
 
         Door door = cells[(int)player.transform.position.y + mapShiftY, (int)player.transform.position.x + mapShiftX].GetComponent<Door>();
         if (door)
